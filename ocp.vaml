@@ -1,0 +1,53 @@
+--- ocp install
+[pre]
+# export GOMAXPROCS=1
+# iptables -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp \
+    --dport 1936 -j ACCEPT
+
+--- keygen
+# ssh-keygen
+
+--- rhn register
+# subscription-manager register --username='username' --password='password'
+# subscription-manager refresh
+# subscription-manager list --available --matches '*OpenShift*'
+# subscription-manager attach --pool=8a85f9996e12cc16016e3826aaec6d34 
+
+--- disable all repos
+# subscription-manager repos --disable="*"
+#  yum-config-manager --disable \*
+
+--- enable only req repos
+subscription-manager repos \
+    --enable="rhel-7-server-rpms" \
+    --enable="rhel-7-server-extras-rpms" \
+    --enable="rhel-7-server-ose-3.11-rpms" \
+    --enable="rhel-7-server-ansible-2.6-rpms"
+
+
+--- install base packages
+# yum install -y  wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
+# yum update
+# reboot
+# yum install -y openshift-ansible
+
+--- install docker 
+# yum install -y docker-1.13.1
+# systemctl enable docker
+# systemctl start docker
+# systemctl is-active docker
+
+--- install no volume plugin workaround for docker volume data lost
+# yum install -y docker-novolume-plugin
+# systemctl enable docker-novolume-plugin
+# systemctl start docker-novolume-plugin
+
+# edit /etc/sysconfig/docker and add:  --authorization-plugin=docker-novolume-plugin
+# systemctl restart docker
+
+
+
+
+
+
+

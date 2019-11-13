@@ -1,0 +1,18 @@
+[hostname]
+# hostnamectl set-hostname kvm
+
+[firewall]
+-- disable and remove firewalld
+# systemctl stop firewalld
+# systemctl disable firewalld
+# dnf remove -y firewalld
+
+[kvm]
+-- install virt settings
+# dnf install -y bridge-utils libvirt virt-install qemu-kvm kvm
+# dnf -y install virt-top libguestfs-tools
+# systemctl enable libvirtd
+# systemctl start libvirtd
+# dnf install -y virt-manager
+
+
