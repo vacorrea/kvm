@@ -38,8 +38,10 @@ nodes
 # Configuring a Registry Location
 # https://docs.openshift.com/container-platform/3.11/install/configuring_inventory_file.html#advanced-install-configuring-registry-location
 oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
-oreg_auth_user='auth_user'
-oreg_auth_password='auth_password'
+oreg_auth_user='vmneo'
+oreg_auth_password='!e7W4a5$Z3GvgyQT'
+oreg_test_login=false
+
 
 # OCP Variables
 ansible_ssh_user=root
@@ -55,10 +57,9 @@ openshift_master_default_subdomain=apps.com
 openshift_master_api_port=443
 openshift_master_console_port=443
 #openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true']}, {'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true', 'zone=apps']},{'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true', 'zone=beta']}]
-openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true']}, {'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true']}]
+#openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true']}, {'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true']}]
 
 # Default Node Selector (these are default values here for reference)
-# https://docs.openshift.com/container-platform/3.11/install/configuring_inventory_file.html#configuring-dedicated-infrastructure-nodes
 #osm_default_node_selector='node-role.kubernetes.io/compute=true'
 #openshift_router_selector='node-role.kubernetes.io/infra=true'
 #openshift_registry_selector='node-role.kubernetes.io/infra=true'
@@ -79,13 +80,14 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-networkpolicy'
 # CA Settings
 openshift_master_overwrite_named_certificates=true
 openshift_certificate_expiry_warning_days=20
-#openshift_master_named_certificates=[{"certfile": "/opt/acme.sh/certs/apps.local/apps.local.cer", "keyfile": "/opt/acme.sh/certs/apps.local/apps.local.key", "cafile": "/opt/acme.sh/certs/apps.local/ca.cer", "names": ["openshift.apps.local", "console.apps.local", "ocpcluster.apps.local", "openshift.local", "console.local", "ocpcluster.local"]}]
 #openshift_hosted_router_certificate={"certfile": "/opt/acme.sh/certs/apps.local/apps.local.cer", "keyfile": "/opt/acme.sh/certs/apps.local/apps.local.key", "cafile": "/opt/acme.sh/certs/apps.local/ca.cer"}
 
 # Authentication Settings
 # htpasswd auth / active directory auth
-openshift_master_htpasswd_users={'admin': 'password'}
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+openshift_master_htpasswd_users={'admin':'$apr1$MQVHPp2y$ls/uvHDm30RR1RpzlhATL.'}
+# Allow all auth
+#openshift_master_identity_providers=[{'name': 'allow_all', 'login': 'true', 'challenge': 'true', 'kind': 'AllowAllPasswordIdentityProvider'}]
 
 # OCP Components
 # registry
@@ -97,45 +99,45 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 
 # service catalog
 openshift_enable_service_catalog=false
-openshift_hosted_etcd_storage_kind=dynamic
-openshift_hosted_etcd_storage_volume_name=etcd-vol
-openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
-openshift_hosted_etcd_storage_volume_size=1G
+#openshift_hosted_etcd_storage_kind=dynamic
+#openshift_hosted_etcd_storage_volume_name=etcd-vol
+#openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
+#openshift_hosted_etcd_storage_volume_size=1G
 
 # prometheus
 openshift_cluster_monitoring_operator_install=false
-openshift_cluster_monitoring_operator_node_selector={"node-role.kubernetes.io/infra":"true"}
-openshift_cluster_monitoring_operator_prometheus_storage_capacity=50Gi
-openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
-openshift_cluster_monitoring_operator_alertmanager_config=true
-openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
-openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
+#openshift_cluster_monitoring_operator_node_selector={"node-role.kubernetes.io/infra":"true"}
+#openshift_cluster_monitoring_operator_prometheus_storage_capacity=50Gi
+#openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+#openshift_cluster_monitoring_operator_alertmanager_config=true
+#openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
+#openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
 
 # metrics
 openshift_metrics_install_metrics=false
-openshift_metrics_duration=7
-openshift_metrics_cassandra_storage_type=dynamic
-openshift_metrics_cassandra_nodeselector={"node-role.kubernetes.io/infra":"true"}
-openshift_metrics_hawkular_nodeselector={"node-role.kubernetes.io/infra":"true"}
-openshift_metrics_heapster_nodeselector={"node-role.kubernetes.io/infra":"true"}
+#openshift_metrics_duration=7
+#openshift_metrics_cassandra_storage_type=dynamic
+#openshift_metrics_cassandra_nodeselector={"node-role.kubernetes.io/infra":"true"}
+#openshift_metrics_hawkular_nodeselector={"node-role.kubernetes.io/infra":"true"}
+#openshift_metrics_heapster_nodeselector={"node-role.kubernetes.io/infra":"true"}
 #openshift_metrics_hawkular_cert=/root/openshift/pki/_.apps.local.pem
 #openshift_metrics_hawkular_key=/root/openshift/pki/_.apps.local-Key.pem
 #openshift_metrics_hawkular_ca=/root/openshift/pki/_.apps.local-CA.pem
 
 # logging
 openshift_logging_install_logging=false
-openshift_logging_install_eventrouter=true
-openshift_logging_curator_default_days=7
+#openshift_logging_install_eventrouter=true
+#openshift_logging_curator_default_days=7
 #openshift_logging_es_cert=/root/openshift/pki/_.apps.local.pem
 #openshift_logging_es_key=/root/openshift/pki/_.apps.local-Key.pem
 #openshift_logging_es_client_cert=/root/openshift/pki/_.apps.local.pem
 #openshift_logging_es_client_key=/root/openshift/pki/_.apps.local-Key.pem
 #openshift_logging_es_ca=/root/openshift/pki/_.apps.local-CA.pem
-openshift_logging_es_pvc_dynamic=true
-openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra":"true"}
-openshift_logging_curator_nodeselector={"node-role.kubernetes.io/infra":"true"}
-openshift_logging_eventrouter_nodeselector={"node-role.kubernetes.io/infra":"true"}
-openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/infra":"true"}
+#openshift_logging_es_pvc_dynamic=true
+#openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra":"true"}
+#openshift_logging_curator_nodeselector={"node-role.kubernetes.io/infra":"true"}
+#openshift_logging_eventrouter_nodeselector={"node-role.kubernetes.io/infra":"true"}
+#openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/infra":"true"}
 #openshift_logging_kibana_cert=/root/openshift/pki/_.apps.local.pem
 #openshift_logging_kibana_key=/root/openshift/pki/_.apps.local-Key.pem
 #openshift_logging_kibana_ca=/root/openshift/pki/_.apps.local-CA.pem
@@ -145,13 +147,13 @@ openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/infra":"true"}
 m1.ocp.com vm_name=m1.ocp.com ipv4addr=152.10.61.36
 
 [infras]
-n1.ocp.com vm_name=n1.ocp.com ipv4addr=152.10.61.229
+m1.ocp.com vm_name=m1.ocp.com ipv4addr=152.10.61.36
 
 [etcd]
 m1.ocp.com
 
 [nodes]
-m1.ocp.com openshift_node_group_name="node-config-master"
+m1.ocp.com openshift_node_group_name="node-config-master-infra"
 n1.ocp.com openshift_node_group_name="node-config-compute"
 
 
